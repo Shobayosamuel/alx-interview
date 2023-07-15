@@ -8,20 +8,15 @@ from math import sqrt
 
 
 def minOperations(n):
-    """
-    calculates the fewest number of operations needed
-    to result in exactly n H characters in the file
-    """
-    if n < 2:
+    """Return the minimum number of operations"""
+    if n == 1:
         return 0
-    prime_list = []
-    while n % 2 == 0:
-        prime_list.append(2)
-        n /= 2
-    for i in range(3, int(sqrt(n)) + 1, 2):
+    factors = []
+    for i in range(2, int(sqrt(n)) + 1):
         while n % i == 0:
-            prime_list.append(i)
-            n /= i
-    if n > 2:
-        prime_list.append(n)
-    return int(sum(prime_list))
+            factors.append(i)
+            n //= i
+    if n > 1:
+        factors.append(n)
+    min_ops = sum(factors)
+    return min_ops
