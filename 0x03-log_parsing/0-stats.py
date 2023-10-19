@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+
 
 import re
 import sys
@@ -32,7 +33,7 @@ try:
 
             if line_count % 10 == 0:
                 total_size = sum(file_sizes)
-                print(f'Total file size: {total_size}')
+                print(f'File size: {total_size}')
                 for code in sorted(status_code_counts):
                     print(f'{code}: {status_code_counts[code]}')
                 print()
