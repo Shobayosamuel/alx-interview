@@ -1,48 +1,45 @@
 #!/usr/bin/python3
 """
-Log parsing
+ 0. Log parsing
 """
 
-
-import re
 import sys
 
 
-log_pattern = re.compile(
-    r'(\d+\.\d+\.\d+\.\d+) - \[.*\] '
-    r'"GET /projects/260 HTTP/1.1" (\d+) (\d)'
-)
+def print_stat(dict_scode, file_size):
+    """prints filesize and status code count"""
+    print("File size: {}".format(file_size))
+    for code, count in sorted(dict_scode.items()):
+        if count != 0:
+            print("{}: {}".format(code, count))
 
 
-file_sizes = []
-status_code_counts = {}
+acc_file_size = 0
+code = 0
+counter = 0
+dict_stat_code = {
+                  "200": 0,
+                  "301": 0,
+                  "400": 0,
+                  "401": 0,
+                  "403": 0,
+                  "404": 0,
+                  "405": 0,
+                  "500": 0}
 
 try:
-    line_count = 0
-
     for line in sys.stdin:
-        line = line.strip()
-        match = log_pattern.match(line)
-
-        if match:
-            file_size = int(match.group(3))
-            status_code = int(match.group(2))
-
-            file_sizes.append(file_size)
-
-            if status_code in status_code_counts:
-                status_code_counts[status_code] += 1
-            else:
-                status_code_counts[status_code] = 1
-
-            line_count += 1
-
-            if line_count % 10 == 0:
-                total_size = sum(file_sizes)
-                print(f'File size: {total_size}')
-                for code in sorted(status_code_counts):
-                    print(f'{code}: {status_code_counts[code]}')
-                print()
-
-except KeyboardInterrupt:
-    pass
+        log_arg_list = line.split()
+        log_reversed = log_arg_list[::-1]
+        if len(log_reversed) > 2:
+            counter += 1
+            if counter <= 10:
+                acc_file_size += int(log_reversed[0])  # file size
+                code = log_reversed[1]  # status code
+                if (code in dict_stat_code.keys()):
+                    dict_stat_code[code] += 1
+                    if (counter == 10):
+                        print_msg(dict_stat_code, acc_file_size)
+                        counter = 0
+finally:
+    print_msg(dict_stat_code, acc_file_size)
