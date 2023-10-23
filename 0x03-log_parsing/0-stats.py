@@ -49,3 +49,4 @@ print(f'Total file size: {total_size}')
 for code in sorted(status_code_counts):
     print(f'{code}: {status_code_counts[code]}')
 """
+
