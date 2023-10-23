@@ -5,8 +5,10 @@ import re
 import sys
 
 
-log_pattern = re.compile(r'(\d+\.\d+\.\d+\.\d+) - \[.*\] "GET /projects/260 HTTP/1.1" (\d+) (\d+)')
-
+log_pattern = re.compile(
+    r'(\d+\.\d+\.\d+\.\d+) - \[.*\] '
+    r'"GET /projects/260 HTTP/1.1" (\d+) (\d)'
+)
 
 file_sizes = []
 status_code_counts = {}
