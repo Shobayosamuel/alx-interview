@@ -3,6 +3,7 @@
  0. Log parsing
 """
 
+
 import sys
 
 
@@ -39,7 +40,7 @@ try:
                 if (code in dict_stat_code.keys()):
                     dict_stat_code[code] += 1
                     if (counter == 10):
-                        print_msg(dict_stat_code, acc_file_size)
+                        print_stat(dict_stat_code, acc_file_size)
                         counter = 0
 finally:
-    print_msg(dict_stat_code, acc_file_size)
+    print_stat(dict_stat_code, acc_file_size)
