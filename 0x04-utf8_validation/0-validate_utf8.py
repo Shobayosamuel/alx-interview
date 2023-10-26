@@ -39,5 +39,4 @@ def validUTF8(data):
                 # Invalid continuation byte
                 return False
 
-    # If there are no unexpected continuation bytes left, it's a valid UTF-8 encoding
     return expected_continuation_bytes == 0
